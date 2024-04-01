@@ -253,6 +253,7 @@ footer {
   /* 배너 */
   .banner-container {
     height: 33.75rem;
+    overflow: hidden;
   }
 
   .banner-content {
