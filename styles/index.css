@@ -43,8 +43,11 @@ header {
 /* 배너 */
 
 .banner {
-  padding-top: 4.375rem;
   background-color: var(--banner-bg);
+}
+
+.banner.top {
+  padding-top: 4.375rem;
 }
 
 .banner-container {
