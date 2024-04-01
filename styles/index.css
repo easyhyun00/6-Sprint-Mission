@@ -8,7 +8,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-inline: 200px;
+  padding-inline: 12.5rem;
 }
 
 .small-button {
@@ -100,11 +100,13 @@ main {
 section {
   display: flex;
   align-items: center;
+  justify-content: start;
   gap: 5rem;
   padding-block: 8.75rem;
 }
 
 section:nth-child(even) {
+  justify-content: end;
   > div {
     order: -1;
   }
@@ -206,7 +208,7 @@ footer {
   /* 메인 */
   section {
     flex-direction: column;
-    padding: 2rem 1.5rem 2rem 2.3rem;
+    padding: 2rem;
     gap: 1.25rem;
   }
 
