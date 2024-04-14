@@ -24,39 +24,61 @@ const signupButton = document.querySelector('.form-button');
 const visibleIcon1 = document.querySelector('#password-visible');
 const visibleIcon2 = document.querySelector('#password-check-visible');
 
-const handleInputValid = (input, error, validFunction) => {
-  input.addEventListener('focusout', () => {
-    const functionArgs =
-      validFunction === handlePwdCheckValid
-        ? [passwordInput, input, error]
-        : [input, error];
+emailInput.addEventListener('focusout', () => {
+  handleEmailValid(emailInput, emailError);
+});
 
-    validFunction(...functionArgs);
+nicknameInput.addEventListener('focusout', () => {
+  handleNicknameValid(nicknameInput, nicknameError);
+});
 
-    handleSignupButtonState(
-      signupButton,
-      emailInput,
-      nicknameInput,
-      passwordInput,
-      pwdCheckInput
-    );
-  });
+passwordInput.addEventListener('focusout', () => {
+  handlePasswordValid(passwordInput, passwordError);
+});
 
-  input.addEventListener('input', () => {
-    handleSignupButtonState(
-      signupButton,
-      emailInput,
-      nicknameInput,
-      passwordInput,
-      pwdCheckInput
-    );
-  });
-};
+pwdCheckInput.addEventListener('focusout', () => {
+  handlePwdCheckValid(passwordInput, pwdCheckInput, pwdCheckError);
+});
 
-handleInputValid(emailInput, emailError, handleEmailValid);
-handleInputValid(nicknameInput, nicknameError, handleNicknameValid);
-handleInputValid(passwordInput, passwordError, handlePasswordValid);
-handleInputValid(pwdCheckInput, pwdCheckError, handlePwdCheckValid);
+emailInput.addEventListener('input', () => {
+  handleSignupButtonState(
+    signupButton,
+    emailInput,
+    nicknameInput,
+    passwordInput,
+    pwdCheckInput
+  );
+});
+
+nicknameInput.addEventListener('input', () => {
+  handleSignupButtonState(
+    signupButton,
+    emailInput,
+    nicknameInput,
+    passwordInput,
+    pwdCheckInput
+  );
+});
+
+passwordInput.addEventListener('input', () => {
+  handleSignupButtonState(
+    signupButton,
+    emailInput,
+    nicknameInput,
+    passwordInput,
+    pwdCheckInput
+  );
+});
+
+pwdCheckInput.addEventListener('input', () => {
+  handleSignupButtonState(
+    signupButton,
+    emailInput,
+    nicknameInput,
+    passwordInput,
+    pwdCheckInput
+  );
+});
 
 visibleIcon1.addEventListener('click', () => {
   togglePasswordVisible(passwordInput, visibleIcon1);

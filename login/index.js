@@ -15,19 +15,21 @@ const loginButton = document.querySelector('.form-button');
 
 const visibleIcon = document.querySelector('.visible-icon');
 
-const handleInputValid = (input, error, validFunction) => {
-  input.addEventListener('focusout', () => {
-    validFunction(input, error);
-    handleLoginButtonState(loginButton, emailInput, passwordInput);
-  });
+emailInput.addEventListener('focusout', () => {
+  handleEmailValid(emailInput, emailError);
+});
 
-  input.addEventListener('input', () => {
-    handleLoginButtonState(loginButton, emailInput, passwordInput);
-  });
-};
+passwordInput.addEventListener('focusout', () => {
+  handlePasswordValid(passwordInput, passwordError);
+});
 
-handleInputValid(emailInput, emailError, handleEmailValid);
-handleInputValid(passwordInput, passwordError, handlePasswordValid);
+emailInput.addEventListener('input', () => {
+  handleLoginButtonState(loginButton, emailInput, passwordInput);
+});
+
+passwordInput.addEventListener('input', () => {
+  handleLoginButtonState(loginButton, emailInput, passwordInput);
+});
 
 visibleIcon.addEventListener('click', () => {
   togglePasswordVisible(passwordInput, visibleIcon);
