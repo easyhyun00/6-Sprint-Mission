@@ -1,0 +1,52 @@
+@import '../../../styles/';
+
+.hidden {
+  display: none;
+}
+
+.input {
+  display: flex;
+  gap: 16px;
+}
+
+.add {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  width: 282px;
+  height: 282px;
+  border-radius: 12px;
+
+  background-color: $cool-gray100;
+  @include font-base($cool-gray400, 400, 16px, 24px);
+
+  cursor: pointer;
+
+  @media (max-width: $tablet-size) {
+    width: 168px;
+    height: 168px;
+  }
+}
+
+.preview {
+  position: relative;
+
+  width: 282px;
+  height: 282px;
+
+  @media (max-width: $tablet-size) {
+    width: 168px;
+    height: 168px;
+  }
+}
+
+.delete {
+  cursor: pointer;
+  position: absolute;
+
+  top: 10px;
+  right: 10px;
+}

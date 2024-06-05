@@ -1,0 +1,11 @@
+@import '../../../styles/';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.title {
+  @include font-base($cool-gray800, 700, 18px, 21px);
+}
