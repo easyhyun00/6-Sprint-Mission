@@ -1,0 +1,13 @@
+@import './font.scss';
+
+@mixin input-style {
+  @include font-base($cool-gray800, 400, 16px, 24px);
+
+  border-radius: 12px;
+  border: none;
+
+  padding-inline: 24px;
+  padding-block: 16px;
+
+  background-color: $cool-gray100;
+}

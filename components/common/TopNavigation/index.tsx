@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
 import style from './style.module.scss';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import cn from 'classnames';
 import useIsMobile from '@/hooks/useIsMobile';

@@ -8,21 +8,27 @@ import DeleteIcon from '@/public/svgs/delete-icon.svg';
 interface FormImageProps extends ComponentProps<'input'> {
   label: string;
   id: string;
+  image: File | null;
+  handleChange: (image: File | null) => void;
 }
 
-const FormImage = ({ label, id, ...props }: FormImageProps) => {
-  const [imagePreview, setImagePreview] = useState('');
-
+const FormImage = ({
+  label,
+  id,
+  image,
+  handleChange,
+  ...props
+}: FormImageProps) => {
   const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
     if (file) {
-      setImagePreview(URL.createObjectURL(file));
+      handleChange(file);
     }
   };
 
   const handleDelete = () => {
-    setImagePreview('');
+    handleChange(null);
   };
 
   return (
@@ -41,11 +47,11 @@ const FormImage = ({ label, id, ...props }: FormImageProps) => {
           <PlusIcon />
           이미지 등록
         </label>
-        {imagePreview && (
+        {image && (
           <div className={style.preview}>
             <Image
               alt="등록한 이미지"
-              src={imagePreview}
+              src={URL.createObjectURL(image)}
               style={{ objectFit: 'cover', borderRadius: '12px' }}
               fill
             />

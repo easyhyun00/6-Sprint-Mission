@@ -1,19 +1,5 @@
 @import '../../../styles/';
 
 .textarea {
-  @include font-base($cool-gray800, 400, 16px, 24px);
-
-  border-radius: 12px;
-  border: none;
-
-  padding-inline: 24px;
-  padding-block: 16px;
-
-  background-color: $cool-gray100;
-
-  height: 250px;
-
-  @media (max-width: $tablet-size) {
-    height: 168px;
-  }
+  @include input-style;
 }
