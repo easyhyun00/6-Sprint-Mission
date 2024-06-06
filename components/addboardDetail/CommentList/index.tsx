@@ -6,15 +6,18 @@ import BackIcon from '@/public/svgs/back-icon.svg';
 import ReplyEmpty from '@/public/svgs/reply-empty.svg';
 import style from './style.module.scss';
 import Link from 'next/link';
+import { ArticleCommentList } from '@/types/comment';
 
-const CommentList = () => {
-  const commentList = require('/public/data/comment.json');
+interface CommentListProps {
+  comments: ArticleCommentList;
+}
 
-  console.log(commentList);
+const CommentList = ({ comments }: CommentListProps) => {
+  console.log(comments);
 
   return (
     <section>
-      {commentList.list.length === 0 ? (
+      {comments.list.length === 0 ? (
         <div className={style.empty}>
           <ReplyEmpty />
           <p>
@@ -24,7 +27,7 @@ const CommentList = () => {
         </div>
       ) : (
         <div>
-          {commentList.list.map((comment: any) => (
+          {comments.list.map((comment: any) => (
             <article key={comment.id}>
               <p className={style.comment}>{comment.content}</p>
               <div className={style.user}>

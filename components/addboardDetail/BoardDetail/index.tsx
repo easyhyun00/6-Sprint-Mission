@@ -4,33 +4,34 @@ import style from './style.module.scss';
 import ProfileIcon from '@/public/svgs/profile.svg';
 import HeartIcon from '@/public/svgs/heart-icon.svg';
 import { dateToString } from '@/utils/dateToString';
+import { Article } from '@/types/article';
 
-const BoardDetail = () => {
-  const board = require('/public/data/board.json');
+interface BoardDetailProps {
+  article: Article;
+}
 
-  console.log(board);
-
+const BoardDetail = ({ article }: BoardDetailProps) => {
   return (
     <article className={style.wrapper}>
-      <h2 className={style.title}>{board.title}</h2>
+      <h2 className={style.title}>{article.title}</h2>
       <div className={style.info}>
         <ProfileIcon width={24} height={24} />
-        <span>{board.writer.nickname}</span>
-        <span>{dateToString(board.createdAt)}</span>
+        <span>{article.writer.nickname}</span>
+        <span>{dateToString(article.createdAt)}</span>
         <div className={style.division} />
         <div className={style.like}>
           <HeartIcon />
-          <span>{board.likeCount}</span>
+          <span>{article.likeCount}</span>
         </div>
       </div>
       <div className={style.division2} />
       <div className={style.content}>
-        <span>{board.content}</span>
-        {board.image && (
+        <span>{article.content}</span>
+        {article.image && (
           <div className={style.image}>
             <Image
               alt="상품 이미지"
-              src={board.image}
+              src={article.image}
               width={180}
               height={180}
               priority
