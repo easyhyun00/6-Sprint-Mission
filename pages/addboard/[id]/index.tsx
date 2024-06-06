@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, FormEvent } from 'react';
 import BoardDetail from '@/components/addboardDetail/BoardDetail';
 import FormTextarea from '@/components/addboard/FormTextarea';
 import Button from '@/components/common/Button';
@@ -7,10 +7,12 @@ import style from './style.module.scss';
 import axios from '@/lib/axios';
 import { Article } from '@/types/article';
 import { ArticleCommentList } from '@/types/comment';
+import { postComment } from '@/apis/postComment';
 
 interface AddboardDetailProps {
+  articleId: number;
   article: Article;
-  comments: ArticleCommentList;
+  commentList: ArticleCommentList;
 }
 
 export async function getServerSideProps(context: {
@@ -29,36 +31,62 @@ export async function getServerSideProps(context: {
   }
 
   const res = await axios.get(`/articles/${articleId}/comments?limit=10`);
-  const comments = res.data;
+  const commentList = res.data;
 
   return {
     props: {
+      articleId,
       article,
-      comments,
+      commentList,
     },
   };
 }
 
-const AddboardDetail = ({ article, comments }: AddboardDetailProps) => {
+const AddboardDetail = ({
+  articleId,
+  article,
+  commentList: initialCommentList,
+}: AddboardDetailProps) => {
+  const [commentList, setCommentList] = useState(initialCommentList);
+  const [comment, setComment] = useState('');
+
+  const isDisabled = !comment;
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const res = await postComment(articleId, comment);
+
+    setCommentList((prevCommentList) => ({
+      ...prevCommentList,
+      list: [res, ...prevCommentList.list],
+    }));
+
+    setComment('');
+  };
+
   return (
     <main>
       <BoardDetail article={article} />
 
       <section>
-        <form>
+        <form onSubmit={handleSubmit}>
           <FormTextarea
             label="댓글 달기"
             id="comment"
             placeholder="댓글을 입력해주세요."
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
             rows={3}
           />
           <div className={style.button}>
-            <Button>등록</Button>
+            <Button disabled={isDisabled} type="submit">
+              등록
+            </Button>
           </div>
         </form>
       </section>
 
-      <CommentList comments={comments} />
+      <CommentList comments={commentList} />
     </main>
   );
 };

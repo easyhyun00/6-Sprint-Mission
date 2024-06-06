@@ -13,8 +13,6 @@ interface CommentListProps {
 }
 
 const CommentList = ({ comments }: CommentListProps) => {
-  console.log(comments);
-
   return (
     <section>
       {comments.list.length === 0 ? (
