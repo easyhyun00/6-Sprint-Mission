@@ -29,6 +29,11 @@
     width: 168px;
     height: 168px;
   }
+
+  @media (max-width: $mobile-size) {
+    width: 150px;
+    height: 150px;
+  }
 }
 
 .preview {
@@ -40,6 +45,11 @@
   @media (max-width: $tablet-size) {
     width: 168px;
     height: 168px;
+  }
+
+  @media (max-width: $mobile-size) {
+    width: 150px;
+    height: 150px;
   }
 }
 

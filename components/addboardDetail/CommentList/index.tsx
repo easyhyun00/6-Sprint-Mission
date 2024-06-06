@@ -5,6 +5,7 @@ import Button from '@/components/common/Button';
 import BackIcon from '@/public/svgs/back-icon.svg';
 import ReplyEmpty from '@/public/svgs/reply-empty.svg';
 import style from './style.module.scss';
+import Link from 'next/link';
 
 const CommentList = () => {
   const commentList = require('/public/data/comment.json');
@@ -39,10 +40,12 @@ const CommentList = () => {
         </div>
       )}
       <div className={style.back}>
-        <Button rounded>
-          목록으로 돌아가기
-          <BackIcon />
-        </Button>
+        <Link href={'/boards'}>
+          <Button rounded>
+            목록으로 돌아가기
+            <BackIcon />
+          </Button>
+        </Link>
       </div>
     </section>
   );

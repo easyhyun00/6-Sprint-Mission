@@ -6,9 +6,14 @@ import FormInput from '@/components/addboard/FormInput';
 import FormTextarea from '@/components/addboard/FormTextarea';
 import FormImage from '@/components/addboard/FormImage';
 import useIsMobile from '@/hooks/useIsMobile';
+import { postImage } from '@/apis/postImage';
+import { postArticle } from '@/apis/postArticle';
+import { useRouter } from 'next/router';
+import { ReqArticle, Article } from '@/types/article';
 
 const AddBoard = () => {
   const isMobile = useIsMobile();
+  const router = useRouter();
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -16,17 +21,21 @@ const AddBoard = () => {
 
   const isDisabled = !title || !content;
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log(title.trim());
-    console.log(content.trim());
-    console.log(image);
+    const articleData: ReqArticle = {
+      title: title.trim(),
+      content: content.trim(),
+    };
 
-    const formData = new FormData();
-    formData.append('title', title.trim());
-    formData.append('content', content.trim());
-    formData.append('image', JSON.stringify(image));
+    if (image) {
+      const imageUrl = await postImage(image);
+      articleData.image = imageUrl.url;
+    }
+
+    const newArticle: Article = await postArticle(articleData);
+    router.push(`/addboard/${newArticle.id}`);
   };
 
   return (

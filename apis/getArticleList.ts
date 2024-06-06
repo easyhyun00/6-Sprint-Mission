@@ -9,6 +9,9 @@ interface GetArticleListParams {
   keyword?: string;
 }
 
+/**
+ * 게시물 목록 가져오기
+ */
 export const getArticleList = async ({
   page = 1,
   pageSize = 3,
