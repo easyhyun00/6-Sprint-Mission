@@ -26,7 +26,6 @@ baseAxios.interceptors.response.use(
     if (isAxiosError(error)) {
       if (error.response?.status === 401) {
         const res = await postToken();
-        console.log(res.accessToken);
         localStorage.setItem('accessToken', res.accessToken);
 
         return axios({
