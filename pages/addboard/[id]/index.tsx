@@ -30,7 +30,7 @@ export async function getServerSideProps(context: {
     };
   }
 
-  const res = await axios.get(`/articles/${articleId}/comments?limit=10`);
+  const res = await axios.get(`/articles/${articleId}/comments?limit=20`);
   const commentList = res.data;
 
   return {

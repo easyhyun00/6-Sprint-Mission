@@ -1,5 +1,5 @@
 import baseAxios from './baseAxios';
-import { articleErrorMessage } from '@/constants/errorMessage';
+import { ERROR_MESSAGE } from '@/constants/errorMessage';
 import { SortType } from '@/constants/sortOption';
 
 interface GetArticleListParams {
@@ -24,6 +24,6 @@ export const getArticleList = async ({
     });
     return response.data;
   } catch (error) {
-    throw new Error(articleErrorMessage);
+    throw new Error(ERROR_MESSAGE.getArticles);
   }
 };
