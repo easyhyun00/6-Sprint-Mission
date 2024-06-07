@@ -1,4 +1,4 @@
-import React, { ComponentProps } from 'react';
+import React, { ComponentProps, memo } from 'react';
 import FormWrapper from '@/components/common/FormWrapper';
 import style from './style.module.scss';
 
@@ -27,4 +27,4 @@ const FormTextarea = ({
   );
 };
 
-export default FormTextarea;
+export default memo(FormTextarea);

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ComponentProps, useMemo } from 'react';
+import React, { ChangeEvent, ComponentProps, useMemo, memo } from 'react';
 import FormWrapper from '@/components/common/FormWrapper';
 import style from './style.module.scss';
 import PlusIcon from '@/public/svgs/plus-icon.svg';
@@ -68,4 +68,4 @@ const FormImage = ({
   );
 };
 
-export default FormImage;
+export default memo(FormImage);

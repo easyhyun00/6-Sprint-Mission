@@ -1,6 +1,6 @@
 import Button from '@/components/common/Button';
 import TitleText from '@/components/common/TitleText';
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useState, useCallback, ChangeEvent } from 'react';
 import style from './style.module.scss';
 import FormInput from '@/components/addboard/FormInput';
 import FormTextarea from '@/components/addboard/FormTextarea';
@@ -38,6 +38,15 @@ const AddBoard = () => {
     router.push(`/addboard/${newArticle.id}`);
   };
 
+  const memoizedSetTitle = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value),
+    []
+  );
+  const memoizedSetContent = useCallback(
+    (e: ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value),
+    []
+  );
+
   return (
     <form onSubmit={handleSubmit}>
       <div className={style.header}>
@@ -52,7 +61,7 @@ const AddBoard = () => {
           id="title"
           placeholder="제목을 입력해주세요"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={memoizedSetTitle}
         />
         <FormTextarea
           label="*내용"
@@ -60,7 +69,7 @@ const AddBoard = () => {
           placeholder="내용을 입력해주세요"
           rows={isMobile ? 7 : 10}
           value={content}
-          onChange={(e) => setContent(e.target.value)}
+          onChange={memoizedSetContent}
         />
         <FormImage
           label="이미지"

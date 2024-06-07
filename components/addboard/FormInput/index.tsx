@@ -1,4 +1,4 @@
-import React, { ComponentProps } from 'react';
+import React, { ComponentProps, memo } from 'react';
 import FormWrapper from '@/components/common/FormWrapper';
 import style from './style.module.scss';
 
@@ -22,4 +22,4 @@ const FormInput = ({ label, id, placeholder, ...props }: FormInputProps) => {
   );
 };
 
-export default FormInput;
+export default memo(FormInput);
