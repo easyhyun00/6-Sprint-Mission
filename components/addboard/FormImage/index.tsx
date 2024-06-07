@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ComponentProps, useState } from 'react';
+import React, { ChangeEvent, ComponentProps, useMemo } from 'react';
 import FormWrapper from '@/components/common/FormWrapper';
 import style from './style.module.scss';
 import PlusIcon from '@/public/svgs/plus-icon.svg';
@@ -31,6 +31,11 @@ const FormImage = ({
     handleChange(null);
   };
 
+  const imageUrl = useMemo(
+    () => (image ? URL.createObjectURL(image) : null),
+    [image]
+  );
+
   return (
     <FormWrapper id={id} label={label}>
       <input
@@ -47,11 +52,11 @@ const FormImage = ({
           <PlusIcon />
           이미지 등록
         </label>
-        {image && (
+        {image && imageUrl && (
           <div className={style.preview}>
             <Image
               alt="등록한 이미지"
-              src={URL.createObjectURL(image)}
+              src={imageUrl}
               style={{ objectFit: 'cover', borderRadius: '12px' }}
               fill
             />
