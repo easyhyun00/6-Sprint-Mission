@@ -6,6 +6,7 @@ import { getArticleList } from '@/apis/getArticleList';
 import useItemsCountOnWindowSize from '@/hooks/useItemsCountOnWindowSize';
 import { useFetch } from '@/hooks/useFetch';
 import LoadingSpinner from '@/public/svgs/spinner.svg';
+import Link from 'next/link';
 
 const BestPostListContainer = () => {
   const pageSize = useItemsCountOnWindowSize({

@@ -7,6 +7,7 @@ import DropDown from '@/components/common/DropDown';
 import { SortType } from '@/constants/sortOption';
 import BestPostListContainer from '@/components/boards/BestPostListContainer';
 import BoardPostListContainer from '@/components/boards/BoardPostListContainer';
+import Link from 'next/link';
 
 const Boards = () => {
   const [order, setOrder] = useState<SortType>('recent');
@@ -29,7 +30,9 @@ const Boards = () => {
       <section>
         <div className={style.board_top}>
           <TitleText title="게시물" />
-          <Button>글쓰기</Button>
+          <Link href="/addboard">
+            <Button>글쓰기</Button>
+          </Link>
         </div>
         <div className={style.board_mid}>
           <SearchBar handleSearchItem={handleSearchItem} />

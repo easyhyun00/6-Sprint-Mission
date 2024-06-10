@@ -15,4 +15,17 @@
   &:hover {
     background-color: darken($brand-blue, 10%);
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: $cool-gray400;
+  }
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.round {
+  border-radius: 40px;
 }

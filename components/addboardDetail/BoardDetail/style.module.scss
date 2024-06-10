@@ -1,0 +1,70 @@
+@import '../../../styles/';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  @include font-base($cool-gray800, 700, 20px, 24px);
+
+  padding-top: 12px;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  > span {
+    &:nth-of-type(1) {
+      @include font-base($cool-gray600, 400, 14px, 17px);
+    }
+
+    &:nth-of-type(2) {
+      @include font-base($cool-gray400, 400, 12px, 14px);
+    }
+  }
+}
+
+.division {
+  width: 1px;
+  height: 24px;
+  margin-inline: 8px;
+
+  background-color: $cool-gray200;
+}
+
+.like {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  > span {
+    @include font-base($cool-gray500, 400, 14px, 12px);
+  }
+}
+
+.division2 {
+  width: 100%;
+  height: 1px;
+
+  background-color: $cool-gray200;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+
+  height: 205px;
+
+  @include font-base($cool-gray800, 400, 16px, 24px);
+}
+
+.image {
+  padding: 8px;
+  border: 1px solid $cool-gray200;
+  border-radius: 8px;
+}
