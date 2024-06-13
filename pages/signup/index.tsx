@@ -19,7 +19,7 @@ type SignUpInput = {
   password: string;
 };
 
-const SignUpPage = () => {
+const SignUp = () => {
   const {
     register,
     handleSubmit,
@@ -108,4 +108,4 @@ const SignUpPage = () => {
   );
 };
 
-export default SignUpPage;
+export default SignUp;
