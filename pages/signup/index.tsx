@@ -12,8 +12,7 @@ import {
   handleBlurConfirmPassword,
 } from './formUtils';
 import ErrorMessage from '@/components/auth/ErrorMessage';
-import { postSignUp } from '@/apis/postSignUp';
-import { STORAGE_KEYS } from '@/constants/storageKey';
+import { postSignUp } from '@/apis/auth/postSignUp';
 import { useRouter } from 'next/router';
 import LoadingSpinner from '@/public/svgs/spinner.svg';
 
@@ -46,11 +45,7 @@ const SignUp = () => {
   const onSubmit = async (data: SignUpInput) => {
     try {
       setIsLoading(true);
-      const res = await postSignUp(data);
-
-      localStorage.setItem(STORAGE_KEYS.accessToken, res.accessToken);
-      localStorage.setItem(STORAGE_KEYS.refreshToken, res.refreshToken);
-
+      await postSignUp(data);
       router.push('/login');
     } catch (error) {
       console.error(error);

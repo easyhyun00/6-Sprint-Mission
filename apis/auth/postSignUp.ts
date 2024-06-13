@@ -1,4 +1,4 @@
-import { baseAxios } from './axios';
+import { baseAxios } from '../axios';
 import { SignUpInput } from '@/pages/signup';
 
 /**

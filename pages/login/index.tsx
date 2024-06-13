@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AuthFormInput from '@/components/auth/AuthFormInput';
 import style from './style.module.scss';
 import Button from '@/components/common/Button';
@@ -7,13 +7,18 @@ import AlreadyText from '@/components/auth/AlreadyText';
 import { useForm } from 'react-hook-form';
 import { handleBlurEmail, handleBlurPassword } from '../signup/formUtils';
 import ErrorMessage from '@/components/auth/ErrorMessage';
+import { useRouter } from 'next/router';
+import { postSignIn } from '@/apis/auth/postSignIn';
+import { STORAGE_KEYS } from '@/constants/storageKey';
+import LoadingSpinner from '@/public/svgs/spinner.svg';
 
-type LoginInput = {
+export type LoginInput = {
   email: string;
   password: string;
 };
 
 const Login = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -27,9 +32,20 @@ const Login = () => {
       password: '',
     },
   });
+  const router = useRouter();
 
-  const onSubmit = (data: LoginInput) => {
-    console.log('제출', data);
+  const onSubmit = async (data: LoginInput) => {
+    try {
+      setIsLoading(true);
+      const res = await postSignIn(data);
+      localStorage.setItem(STORAGE_KEYS.accessToken, res.accessToken);
+      localStorage.setItem(STORAGE_KEYS.refreshToken, res.refreshToken);
+      router.push('/');
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -43,7 +59,7 @@ const Login = () => {
           error={!!errors.email}
           {...register('email', {
             required: true,
-            pattern: /^[^s@]+@[^s@]+.[^s@]+$/,
+            pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
           })}
           onBlur={(e) => handleBlurEmail(e, setError, clearErrors)}
         />
@@ -53,13 +69,14 @@ const Login = () => {
           id="password"
           placeholder="비밀번호를 입력해주세요"
           type="password"
+          autoComplete="new-password"
           error={!!errors.password}
           {...register('password', { required: true, minLength: 8 })}
           onBlur={(e) => handleBlurPassword(e, setError, clearErrors)}
         />
         {errors.password && <ErrorMessage message={errors.password.message} />}
-        <Button rounded type="submit" disabled={!isValid}>
-          로그인
+        <Button rounded type="submit" disabled={!isValid || isLoading}>
+          {isLoading ? <LoadingSpinner width={50} height={50} /> : '로그인'}
         </Button>
       </form>
       <SimpleLoginBox />
