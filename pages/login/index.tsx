@@ -1,12 +1,11 @@
-import Link from 'next/link';
 import React from 'react';
 import FormInput from '@/components/addboard/FormInput';
-import Button from '@/components/common/Button';
 import style from './style.module.scss';
-import AlreadyText from '@/components/auth/AlreadyText';
+import Button from '@/components/common/Button';
 import SimpleLoginBox from '@/components/auth/SimpleLoginBox';
+import AlreadyText from '@/components/auth/AlreadyText';
 
-const SignUp = () => {
+const Login = () => {
   return (
     <main>
       <form className={style.form}>
@@ -17,30 +16,19 @@ const SignUp = () => {
           type="email"
         />
         <FormInput
-          label="닉네임"
-          id="nickname"
-          placeholder="닉네임을 입력해주세요"
-        />
-        <FormInput
           label="비밀번호"
           id="password"
           placeholder="비밀번호를 입력해주세요"
           type="password"
         />
-        <FormInput
-          label="비밀번호 확인"
-          id="password check"
-          placeholder="비밀번호를 다시 한 번 입력해주세요"
-          type="password"
-        />
         <Button rounded disabled>
-          회원가입
+          로그인
         </Button>
       </form>
       <SimpleLoginBox />
-      <AlreadyText type="로그인" />
+      <AlreadyText type="회원가입" />
     </main>
   );
 };
 
-export default SignUp;
+export default Login;

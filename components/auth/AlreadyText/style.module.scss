@@ -1,0 +1,13 @@
+@import '../../../styles/';
+
+.already {
+  text-align: center;
+  margin-top: 24px;
+
+  @include font-base($cool-gray800, 500, 15px, 18px);
+
+  & a {
+    text-decoration: underline;
+    color: $brand-blue;
+  }
+}

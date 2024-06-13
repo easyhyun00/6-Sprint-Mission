@@ -1,0 +1,21 @@
+@import '../../../styles/';
+
+.simple {
+  height: 74px;
+  border-radius: 8px;
+
+  margin-top: 24px;
+  padding-inline: 23px;
+
+  background-color: $brand-skyblue;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.social {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
