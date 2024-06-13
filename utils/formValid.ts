@@ -1,4 +1,6 @@
 import { FocusEvent } from 'react';
+import { EMAIL_PATTERN, PW_MIN_LEN } from '@/constants/authForm';
+import { ERROR_MESSAGE } from '@/constants/errorMessage';
 
 type BlurHandler = (
   e: FocusEvent<HTMLInputElement>,
@@ -15,15 +17,15 @@ type BlurHandler = (
  */
 export const handleBlurEmail: BlurHandler = (e, setError, clearErrors) => {
   const email = e.target.value;
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailRegex = EMAIL_PATTERN;
 
   if (!email) {
     setError('email', {
-      message: '이메일을 입력해주세요.',
+      message: ERROR_MESSAGE.emailRequired,
     });
   } else if (!emailRegex.test(email)) {
     setError('email', {
-      message: '유효한 이메일 주소를 입력해주세요.',
+      message: ERROR_MESSAGE.invalidEmail,
     });
   } else {
     clearErrors('email');
@@ -41,7 +43,7 @@ export const handleBlurNickname: BlurHandler = (e, setError, clearErrors) => {
 
   if (!nickname) {
     setError('nickname', {
-      message: '닉네임을 입력해주세요.',
+      message: ERROR_MESSAGE.nicknameRequired,
     });
   } else {
     clearErrors('nickname');
@@ -59,11 +61,11 @@ export const handleBlurPassword: BlurHandler = (e, setError, clearErrors) => {
 
   if (!password) {
     setError('password', {
-      message: '비밀번호를 입력해주세요.',
+      message: ERROR_MESSAGE.passwordRequired,
     });
-  } else if (password.length < 8) {
+  } else if (password.length < PW_MIN_LEN) {
     setError('password', {
-      message: '비밀번호를 8자 이상 입력해주세요.',
+      message: ERROR_MESSAGE.passwordLength(PW_MIN_LEN),
     });
   } else {
     clearErrors('password');
@@ -87,7 +89,7 @@ export const handleBlurConfirmPassword: BlurHandler = (
 
   if (passwordConfirmation !== password) {
     setError('passwordConfirmation', {
-      message: '비밀번호가 일치하지 않습니다.',
+      message: ERROR_MESSAGE.passwordMismatch,
     });
   } else {
     clearErrors('passwordConfirmation');

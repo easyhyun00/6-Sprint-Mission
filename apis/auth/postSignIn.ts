@@ -1,5 +1,5 @@
 import { baseAxios } from '../axios';
-import { LoginInput } from '@/pages/login';
+import { LoginInput } from '@/types/auth';
 
 /**
  * 로그인

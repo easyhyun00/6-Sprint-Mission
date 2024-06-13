@@ -1,5 +1,5 @@
 import { baseAxios } from '../axios';
-import { SignUpInput } from '@/pages/signup';
+import { SignUpInput } from '@/types/auth';
 
 /**
  * 회원가입

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Button from '@/components/common/Button';
 import style from './style.module.scss';
 import AlreadyText from '@/components/auth/AlreadyText';
@@ -10,19 +10,14 @@ import {
   handleBlurNickname,
   handleBlurPassword,
   handleBlurConfirmPassword,
-} from './formUtils';
+} from '@/utils/formValid';
 import ErrorMessage from '@/components/auth/ErrorMessage';
 import { postSignUp } from '@/apis/auth/postSignUp';
 import { useRouter } from 'next/router';
 import LoadingSpinner from '@/public/svgs/spinner.svg';
-import { STORAGE_KEYS } from '@/constants/storageKey';
-
-export type SignUpInput = {
-  email: string;
-  nickname: string;
-  password: string;
-  passwordConfirmation: string;
-};
+import useAuthRedirect from '@/hooks/useAuthRedirect';
+import { SignUpInput } from '@/types/auth';
+import { EMAIL_PATTERN, PW_MIN_LEN } from '@/constants/authForm';
 
 const SignUp = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -33,14 +28,7 @@ const SignUp = () => {
     formState: { errors, isValid },
     setError,
     clearErrors,
-  } = useForm({
-    defaultValues: {
-      email: '',
-      nickname: '',
-      password: '',
-      passwordConfirmation: '',
-    },
-  });
+  } = useForm<SignUpInput>();
   const router = useRouter();
 
   const onSubmit = async (data: SignUpInput) => {
@@ -55,12 +43,7 @@ const SignUp = () => {
     }
   };
 
-  useEffect(() => {
-    const accessToken = localStorage.getItem(STORAGE_KEYS.accessToken);
-    if (accessToken) {
-      router.push('/');
-    }
-  }, [router]);
+  useAuthRedirect();
 
   return (
     <main>
@@ -73,11 +56,12 @@ const SignUp = () => {
           error={!!errors.email}
           {...register('email', {
             required: true,
-            pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            pattern: EMAIL_PATTERN,
           })}
           onBlur={(e) => handleBlurEmail(e, setError, clearErrors)}
         />
         {errors.email && <ErrorMessage message={errors.email.message} />}
+
         <AuthFormInput
           label="닉네임"
           id="nickname"
@@ -87,6 +71,7 @@ const SignUp = () => {
           onBlur={(e) => handleBlurNickname(e, setError, clearErrors)}
         />
         {errors.nickname && <ErrorMessage message={errors.nickname.message} />}
+
         <AuthFormInput
           label="비밀번호"
           id="password"
@@ -94,10 +79,11 @@ const SignUp = () => {
           type="password"
           autoComplete="new-password"
           error={!!errors.password}
-          {...register('password', { required: true, minLength: 8 })}
+          {...register('password', { required: true, minLength: PW_MIN_LEN })}
           onBlur={(e) => handleBlurPassword(e, setError, clearErrors)}
         />
         {errors.password && <ErrorMessage message={errors.password.message} />}
+
         <AuthFormInput
           label="비밀번호 확인"
           id="passwordConfirmation"
@@ -107,7 +93,7 @@ const SignUp = () => {
           error={!!errors.passwordConfirmation}
           {...register('passwordConfirmation', {
             required: true,
-            minLength: 8,
+            minLength: PW_MIN_LEN,
             validate: (value) => value === getValues('password'),
           })}
           onBlur={(e) =>
@@ -122,6 +108,7 @@ const SignUp = () => {
         {errors.passwordConfirmation && (
           <ErrorMessage message={errors.passwordConfirmation.message} />
         )}
+
         <Button rounded type="submit" disabled={!isValid || isLoading}>
           {isLoading ? <LoadingSpinner width={50} height={50} /> : '회원가입'}
         </Button>
