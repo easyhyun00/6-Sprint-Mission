@@ -1,0 +1,47 @@
+@import '../../styles/';
+
+.form {
+  margin-top: 40px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  & button {
+    height: 56px;
+
+    justify-content: center;
+  }
+}
+
+.simple {
+  height: 74px;
+  border-radius: 8px;
+
+  margin-top: 24px;
+  padding-inline: 23px;
+
+  background-color: $brand-skyblue;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.social {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.already {
+  text-align: center;
+  margin-top: 24px;
+
+  @include font-base($cool-gray800, 500, 15px, 18px);
+
+  & a {
+    text-decoration: underline;
+    color: $brand-blue;
+  }
+}

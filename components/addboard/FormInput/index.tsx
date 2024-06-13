@@ -6,9 +6,16 @@ interface FormInputProps extends ComponentProps<'input'> {
   label: string;
   id: string;
   placeholder: string;
+  type?: string;
 }
 
-const FormInput = ({ label, id, placeholder, ...props }: FormInputProps) => {
+const FormInput = ({
+  label,
+  id,
+  placeholder,
+  type,
+  ...props
+}: FormInputProps) => {
   return (
     <FormWrapper id={id} label={label}>
       <input
@@ -16,6 +23,7 @@ const FormInput = ({ label, id, placeholder, ...props }: FormInputProps) => {
         name={id}
         placeholder={placeholder}
         className={style.input}
+        type={type}
         {...props}
       />
     </FormWrapper>

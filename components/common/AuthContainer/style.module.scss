@@ -1,0 +1,16 @@
+@import '../../../styles';
+
+.container {
+  max-width: $auth-max-width-size;
+  margin: 0 auto;
+
+  @media (max-width: $auth-max-width-size) {
+    margin-inline: 16px;
+  }
+}
+
+.header {
+  text-align: center;
+
+  margin-top: 60px;
+}
