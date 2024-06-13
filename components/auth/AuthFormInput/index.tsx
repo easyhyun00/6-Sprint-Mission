@@ -13,8 +13,6 @@ interface FormInputProps extends React.ComponentProps<'input'> {
 
 const AuthFormInput = forwardRef<HTMLInputElement, FormInputProps>(
   ({ label, id, placeholder, type, error, ...props }, ref) => {
-    console.log(error);
-
     return (
       <FormWrapper id={id} label={label}>
         <input

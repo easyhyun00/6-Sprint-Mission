@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@/components/common/Button';
 import style from './style.module.scss';
 import AlreadyText from '@/components/auth/AlreadyText';
@@ -12,14 +12,20 @@ import {
   handleBlurConfirmPassword,
 } from './formUtils';
 import ErrorMessage from '@/components/auth/ErrorMessage';
+import { postSignUp } from '@/apis/postSignUp';
+import { STORAGE_KEYS } from '@/constants/storageKey';
+import { useRouter } from 'next/router';
+import LoadingSpinner from '@/public/svgs/spinner.svg';
 
-type SignUpInput = {
+export type SignUpInput = {
   email: string;
   nickname: string;
   password: string;
+  passwordConfirmation: string;
 };
 
 const SignUp = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -32,12 +38,25 @@ const SignUp = () => {
       email: '',
       nickname: '',
       password: '',
-      passwordCheck: '',
+      passwordConfirmation: '',
     },
   });
+  const router = useRouter();
 
-  const onSubmit = (data: SignUpInput) => {
-    console.log('제출', data);
+  const onSubmit = async (data: SignUpInput) => {
+    try {
+      setIsLoading(true);
+      const res = await postSignUp(data);
+
+      localStorage.setItem(STORAGE_KEYS.accessToken, res.accessToken);
+      localStorage.setItem(STORAGE_KEYS.refreshToken, res.refreshToken);
+
+      router.push('/login');
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -51,7 +70,7 @@ const SignUp = () => {
           error={!!errors.email}
           {...register('email', {
             required: true,
-            pattern: /^[^s@]+@[^s@]+.[^s@]+$/,
+            pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
           })}
           onBlur={(e) => handleBlurEmail(e, setError, clearErrors)}
         />
@@ -70,6 +89,7 @@ const SignUp = () => {
           id="password"
           placeholder="비밀번호를 입력해주세요"
           type="password"
+          autoComplete="new-password"
           error={!!errors.password}
           {...register('password', { required: true, minLength: 8 })}
           onBlur={(e) => handleBlurPassword(e, setError, clearErrors)}
@@ -77,11 +97,12 @@ const SignUp = () => {
         {errors.password && <ErrorMessage message={errors.password.message} />}
         <AuthFormInput
           label="비밀번호 확인"
-          id="passwordCheck"
+          id="passwordConfirmation"
           placeholder="비밀번호를 다시 한 번 입력해주세요"
           type="password"
-          error={!!errors.passwordCheck}
-          {...register('passwordCheck', {
+          autoComplete="new-password"
+          error={!!errors.passwordConfirmation}
+          {...register('passwordConfirmation', {
             required: true,
             minLength: 8,
             validate: (value) => value === getValues('password'),
@@ -95,11 +116,11 @@ const SignUp = () => {
             )
           }
         />
-        {errors.passwordCheck && (
-          <ErrorMessage message={errors.passwordCheck.message} />
+        {errors.passwordConfirmation && (
+          <ErrorMessage message={errors.passwordConfirmation.message} />
         )}
-        <Button rounded type="submit" disabled={!isValid}>
-          회원가입
+        <Button rounded type="submit" disabled={!isValid || isLoading}>
+          {isLoading ? <LoadingSpinner width={50} height={50} /> : '회원가입'}
         </Button>
       </form>
       <SimpleLoginBox />

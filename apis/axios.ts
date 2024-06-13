@@ -3,12 +3,18 @@ import { isAxiosError } from 'axios';
 import { postCreateToken } from './postCreateToken';
 import { STORAGE_KEYS } from '@/constants/storageKey';
 
-const baseAxios = axios.create({
+/** 단순한 API 요청 클라이언트 */
+export const baseAxios = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   timeout: 30000,
 });
 
-baseAxios.interceptors.request.use((config) => {
+export const authAxios = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  timeout: 30000,
+});
+
+authAxios.interceptors.request.use((config) => {
   config.headers.Authorization = `Bearer ${localStorage.getItem(
     STORAGE_KEYS.accessToken
   )}`;
@@ -16,7 +22,7 @@ baseAxios.interceptors.request.use((config) => {
   return config;
 });
 
-baseAxios.interceptors.response.use(
+authAxios.interceptors.response.use(
   (response) => {
     return response;
   },
@@ -43,5 +49,3 @@ baseAxios.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-export default baseAxios;

@@ -1,4 +1,4 @@
-import baseAxios from './baseAxios';
+import { authAxios } from './axios';
 
 /**
  * 이미지 업로드
@@ -7,7 +7,7 @@ export const postCreateImage = async (image: File) => {
   const formData = new FormData();
   formData.append('image', image);
   try {
-    const response = await baseAxios.post('/images/upload', formData, {
+    const response = await authAxios.post('/images/upload', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

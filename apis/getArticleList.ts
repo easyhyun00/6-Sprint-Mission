@@ -1,4 +1,4 @@
-import baseAxios from './baseAxios';
+import { authAxios } from './axios';
 import { ERROR_MESSAGE } from '@/constants/errorMessage';
 import { SortType } from '@/constants/sortOption';
 
@@ -19,7 +19,7 @@ export const getArticleList = async ({
   keyword,
 }: GetArticleListParams) => {
   try {
-    const response = await baseAxios.get('/articles', {
+    const response = await authAxios.get('/articles', {
       params: { page, pageSize, orderBy, keyword },
     });
     return response.data;

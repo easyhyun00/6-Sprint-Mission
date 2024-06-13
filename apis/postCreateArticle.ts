@@ -1,4 +1,4 @@
-import baseAxios from './baseAxios';
+import { authAxios } from './axios';
 import { ReqArticle } from '@/types/article';
 
 /**
@@ -6,7 +6,7 @@ import { ReqArticle } from '@/types/article';
  */
 export const postCreateArticle = async (article: ReqArticle) => {
   try {
-    const response = await baseAxios.post('/articles', article);
+    const response = await authAxios.post('/articles', article);
     return response.data;
   } catch (error) {
     console.error(error);

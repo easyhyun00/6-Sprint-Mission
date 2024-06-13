@@ -83,13 +83,13 @@ export const handleBlurConfirmPassword: BlurHandler = (
   clearErrors,
   password
 ) => {
-  const passwordCheck = e.target.value;
+  const passwordConfirmation = e.target.value;
 
-  if (passwordCheck !== password) {
-    setError('passwordCheck', {
+  if (passwordConfirmation !== password) {
+    setError('passwordConfirmation', {
       message: '비밀번호가 일치하지 않습니다.',
     });
   } else {
-    clearErrors('passwordCheck');
+    clearErrors('passwordConfirmation');
   }
 };
