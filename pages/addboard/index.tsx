@@ -6,8 +6,8 @@ import FormInput from '@/components/addboard/FormInput';
 import FormTextarea from '@/components/addboard/FormTextarea';
 import FormImage from '@/components/addboard/FormImage';
 import useIsMobile from '@/hooks/useIsMobile';
-import { postImage } from '@/apis/postImage';
-import { postArticle } from '@/apis/postArticle';
+import { postCreateImage } from '@/apis/postCreateImage';
+import { postCreateArticle } from '@/apis/postCreateArticle';
 import { useRouter } from 'next/router';
 import { ReqArticle, Article } from '@/types/article';
 
@@ -30,19 +30,19 @@ const AddBoard = () => {
     };
 
     if (image) {
-      const imageUrl = await postImage(image);
+      const imageUrl = await postCreateImage(image);
       articleData.image = imageUrl.url;
     }
 
-    const newArticle: Article = await postArticle(articleData);
+    const newArticle: Article = await postCreateArticle(articleData);
     router.push(`/addboard/${newArticle.id}`);
   };
 
-  const memoizedSetTitle = useCallback(
+  const handleChangeTitle = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value),
     []
   );
-  const memoizedSetContent = useCallback(
+  const handleChangeContent = useCallback(
     (e: ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value),
     []
   );
@@ -61,7 +61,7 @@ const AddBoard = () => {
           id="title"
           placeholder="제목을 입력해주세요"
           value={title}
-          onChange={memoizedSetTitle}
+          onChange={handleChangeTitle}
         />
         <FormTextarea
           label="*내용"
@@ -69,7 +69,7 @@ const AddBoard = () => {
           placeholder="내용을 입력해주세요"
           rows={isMobile ? 7 : 10}
           value={content}
-          onChange={memoizedSetContent}
+          onChange={handleChangeContent}
         />
         <FormImage
           label="이미지"

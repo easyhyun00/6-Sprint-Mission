@@ -3,7 +3,7 @@ import baseAxios from './baseAxios';
 /**
  * 이미지 업로드
  */
-export const postImage = async (image: File) => {
+export const postCreateImage = async (image: File) => {
   const formData = new FormData();
   formData.append('image', image);
   try {

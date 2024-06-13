@@ -7,7 +7,7 @@ import style from './style.module.scss';
 import axios from '@/lib/axios';
 import { Article } from '@/types/article';
 import { ArticleCommentList } from '@/types/comment';
-import { postComment } from '@/apis/postComment';
+import { postCreateComment } from '@/apis/postCreateComment';
 
 interface AddboardDetailProps {
   articleId: number;
@@ -21,17 +21,19 @@ export async function getServerSideProps(context: {
   const articleId = context.params['id'];
 
   let article;
+  let commentList;
   try {
-    const res = await axios.get(`/articles/${articleId}`);
-    article = res.data;
+    const [res1, res2] = await Promise.all([
+      axios.get(`/articles/${articleId}`),
+      axios.get(`/articles/${articleId}/comments?limit=20`),
+    ]);
+    article = res1.data;
+    commentList = res2.data;
   } catch (error) {
     return {
       notFound: true,
     };
   }
-
-  const res = await axios.get(`/articles/${articleId}/comments?limit=20`);
-  const commentList = res.data;
 
   return {
     props: {
@@ -54,7 +56,7 @@ const AddboardDetail = ({
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await postComment(articleId, comment);
+    const res = await postCreateComment(articleId, comment);
 
     setCommentList((prevCommentList) => ({
       ...prevCommentList,
