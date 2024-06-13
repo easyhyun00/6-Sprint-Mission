@@ -34,7 +34,9 @@ const BoardPostListContainer = ({
   }>(getArticleList, params);
 
   if (isLoading && pageSize === BOARD_PAGE_SIZE) {
-    return <LoadingSpinner className={style.spinner} />;
+    return (
+      <LoadingSpinner width={200} height={200} className={style.spinner} />
+    );
   }
   if (loadError) {
     return <span>{loadError.message}</span>;

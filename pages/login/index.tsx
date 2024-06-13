@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AuthFormInput from '@/components/auth/AuthFormInput';
 import style from './style.module.scss';
 import Button from '@/components/common/Button';
@@ -22,7 +22,6 @@ const Login = () => {
   const {
     register,
     handleSubmit,
-    getValues,
     formState: { errors, isValid },
     setError,
     clearErrors,
@@ -47,6 +46,13 @@ const Login = () => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem(STORAGE_KEYS.accessToken);
+    if (accessToken) {
+      router.push('/');
+    }
+  }, [router]);
 
   return (
     <main>

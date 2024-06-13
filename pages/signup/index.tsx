@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@/components/common/Button';
 import style from './style.module.scss';
 import AlreadyText from '@/components/auth/AlreadyText';
@@ -15,6 +15,7 @@ import ErrorMessage from '@/components/auth/ErrorMessage';
 import { postSignUp } from '@/apis/auth/postSignUp';
 import { useRouter } from 'next/router';
 import LoadingSpinner from '@/public/svgs/spinner.svg';
+import { STORAGE_KEYS } from '@/constants/storageKey';
 
 export type SignUpInput = {
   email: string;
@@ -53,6 +54,13 @@ const SignUp = () => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem(STORAGE_KEYS.accessToken);
+    if (accessToken) {
+      router.push('/');
+    }
+  }, [router]);
 
   return (
     <main>
