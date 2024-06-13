@@ -1,0 +1,8 @@
+@import '../../../styles/';
+
+.message {
+  @include font-base($brand-error, 600, 15px, 18px);
+
+  margin-top: -15px;
+  margin-left: 3px;
+}
