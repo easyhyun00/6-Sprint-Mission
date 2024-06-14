@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import BoardPost from '../BoardPost';
 import { Post } from '@/types/post';
-import { getArticleList } from '@/apis/getArticleList';
+import { getArticleList } from '@/apis/board/getArticleList';
 import style from './style.module.scss';
 import { SortType } from '@/constants/sortOption';
 import LoadingSpinner from '@/public/svgs/spinner.svg';

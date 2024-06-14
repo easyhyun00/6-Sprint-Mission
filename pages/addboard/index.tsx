@@ -6,8 +6,8 @@ import FormInput from '@/components/addboard/FormInput';
 import FormTextarea from '@/components/addboard/FormTextarea';
 import FormImage from '@/components/addboard/FormImage';
 import useIsMobile from '@/hooks/useIsMobile';
-import { postCreateImage } from '@/apis/postCreateImage';
-import { postCreateArticle } from '@/apis/postCreateArticle';
+import { postCreateImage } from '@/apis/board/postCreateImage';
+import { postCreateArticle } from '@/apis/board/postCreateArticle';
 import { useRouter } from 'next/router';
 import { ReqArticle, Article } from '@/types/article';
 

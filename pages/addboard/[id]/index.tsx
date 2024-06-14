@@ -7,7 +7,7 @@ import style from './style.module.scss';
 import axios from '@/lib/axios';
 import { Article } from '@/types/article';
 import { ArticleCommentList } from '@/types/comment';
-import { postCreateComment } from '@/apis/postCreateComment';
+import { postCreateComment } from '@/apis/board/postCreateComment';
 
 interface AddboardDetailProps {
   articleId: number;

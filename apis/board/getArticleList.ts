@@ -1,4 +1,4 @@
-import { authAxios } from './axios';
+import { authAxios } from '../axios';
 import { ERROR_MESSAGE } from '@/constants/errorMessage';
 import { SortType } from '@/constants/sortOption';
 

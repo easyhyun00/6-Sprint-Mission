@@ -1,4 +1,4 @@
-import { authAxios } from './axios';
+import { authAxios } from '../axios';
 import { ReqArticle } from '@/types/article';
 
 /**

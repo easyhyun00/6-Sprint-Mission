@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { Post } from '@/types/post';
 import BestPost from '../BestPost';
 import style from './style.module.scss';
-import { getArticleList } from '@/apis/getArticleList';
+import { getArticleList } from '@/apis/board/getArticleList';
 import useItemsCountOnWindowSize from '@/hooks/useItemsCountOnWindowSize';
 import { useFetch } from '@/hooks/useFetch';
 import LoadingSpinner from '@/public/svgs/spinner.svg';

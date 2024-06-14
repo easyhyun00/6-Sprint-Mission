@@ -1,4 +1,4 @@
-import { authAxios } from './axios';
+import { authAxios } from '../axios';
 
 /**
  * 게시물 댓글

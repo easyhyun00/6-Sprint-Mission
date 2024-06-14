@@ -1,4 +1,4 @@
-import { authAxios } from './axios';
+import { authAxios } from '../axios';
 import { STORAGE_KEYS } from '@/constants/storageKey';
 
 /**

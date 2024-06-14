@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { isAxiosError } from 'axios';
-import { postCreateToken } from './postCreateToken';
+import { postCreateToken } from './auth/postCreateToken';
 import { STORAGE_KEYS } from '@/constants/storageKey';
 
 /** 단순한 API 요청 클라이언트 */
