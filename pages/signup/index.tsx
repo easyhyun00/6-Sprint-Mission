@@ -38,6 +38,7 @@ const SignUp = () => {
       router.push('/login');
     } catch (error) {
       console.error(error);
+      alert(error);
     } finally {
       setIsLoading(false);
     }
