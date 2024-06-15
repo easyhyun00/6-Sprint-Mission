@@ -20,28 +20,23 @@ export async function getServerSideProps(context: {
 }) {
   const articleId = context.params['id'];
 
-  let article;
-  let commentList;
   try {
-    const [res1, res2] = await Promise.all([
+    const [articleRes, commentsRes] = await Promise.all([
       axios.get(`/articles/${articleId}`),
       axios.get(`/articles/${articleId}/comments?limit=20`),
     ]);
-    article = res1.data;
-    commentList = res2.data;
+    return {
+      props: {
+        articleId,
+        article: articleRes.data,
+        commentList: commentsRes.data,
+      },
+    };
   } catch (error) {
     return {
       notFound: true,
     };
   }
-
-  return {
-    props: {
-      articleId,
-      article,
-      commentList,
-    },
-  };
 }
 
 const AddboardDetail = ({
