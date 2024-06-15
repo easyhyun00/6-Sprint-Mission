@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
 import style from './style.module.scss';
 import { useRouter } from 'next/router';
 import cn from 'classnames';
@@ -8,17 +7,12 @@ import ProfileIcon from '@/public/svgs/profile.svg';
 import LogoBig from '@/public/svgs/logo-bg.svg';
 import LogoSmall from '@/public/svgs/logo-sm.svg';
 import Button from '../Button';
-import { STORAGE_KEYS } from '@/constants/storageKey';
+import { useIsLogin } from '@/hooks/useIsLogin';
 
 const TopNavigation = () => {
   const { pathname } = useRouter();
   const isMobile = useIsMobile();
-  const [accessToken, setAccessToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    const token = localStorage.getItem(STORAGE_KEYS.accessToken);
-    setAccessToken(token);
-  }, []);
+  const isLogin = useIsLogin();
 
   return (
     <header className={style.header}>
@@ -50,7 +44,7 @@ const TopNavigation = () => {
         </nav>
       </div>
       <div className={style.profile}>
-        {accessToken ? (
+        {isLogin ? (
           <ProfileIcon width="40" height="40" />
         ) : (
           <Link href="/login">
