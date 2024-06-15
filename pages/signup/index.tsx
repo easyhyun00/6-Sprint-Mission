@@ -10,7 +10,7 @@ import { postSignUp } from '@/apis/auth/postSignUp';
 import { useRouter } from 'next/router';
 import LoadingSpinner from '@/public/svgs/spinner.svg';
 import useAuthRedirect from '@/hooks/useAuthRedirect';
-import { SignUpInput } from '@/types/auth';
+import { SignUpFormData } from '@/types/auth';
 import { EMAIL_PATTERN, PW_MIN_LEN } from '@/constants/authForm';
 
 const SignUp = () => {
@@ -20,10 +20,10 @@ const SignUp = () => {
     handleSubmit,
     getValues,
     formState: { errors, isValid },
-  } = useForm<SignUpInput>({ mode: 'onBlur' });
+  } = useForm<SignUpFormData>({ mode: 'onBlur' });
   const router = useRouter();
 
-  const onSubmit = async (data: SignUpInput) => {
+  const onSubmit = async (data: SignUpFormData) => {
     try {
       setIsLoading(true);
       await postSignUp(data);

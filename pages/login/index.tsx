@@ -11,7 +11,7 @@ import { postSignIn } from '@/apis/auth/postSignIn';
 import { STORAGE_KEYS } from '@/constants/storageKey';
 import LoadingSpinner from '@/public/svgs/spinner.svg';
 import useAuthRedirect from '@/hooks/useAuthRedirect';
-import { LoginInput } from '@/types/auth';
+import { LoginFormData } from '@/types/auth';
 import { EMAIL_PATTERN, PW_MIN_LEN } from '@/constants/authForm';
 
 const Login = () => {
@@ -22,10 +22,10 @@ const Login = () => {
     formState: { errors, isValid },
     setError,
     clearErrors,
-  } = useForm<LoginInput>({ mode: 'onBlur' });
+  } = useForm<LoginFormData>({ mode: 'onBlur' });
   const router = useRouter();
 
-  const onSubmit = async (data: LoginInput) => {
+  const onSubmit = async (data: LoginFormData) => {
     try {
       setIsLoading(true);
       const res = await postSignIn(data);

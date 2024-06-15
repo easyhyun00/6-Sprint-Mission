@@ -1,10 +1,10 @@
 import { baseAxios } from '../axios';
-import { LoginInput } from '@/types/auth';
+import { LoginFormData } from '@/types/auth';
 
 /**
  * 로그인
  */
-export const postSignIn = async (signInForm: LoginInput) => {
+export const postSignIn = async (signInForm: LoginFormData) => {
   console.log('api', signInForm);
   try {
     const response = await baseAxios.post('/auth/signIn', signInForm);
