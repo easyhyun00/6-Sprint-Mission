@@ -3,7 +3,7 @@ import { authAxios } from '../axios';
 /**
  * 이미지 업로드
  */
-export const postCreateImage = async (image: File) => {
+export const createImage = async (image: File) => {
   const formData = new FormData();
   formData.append('image', image);
   try {

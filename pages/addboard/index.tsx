@@ -6,8 +6,8 @@ import FormInput from '@/components/addboard/FormInput';
 import FormTextarea from '@/components/addboard/FormTextarea';
 import FormImage from '@/components/addboard/FormImage';
 import useIsMobile from '@/hooks/useIsMobile';
-import { postCreateImage } from '@/apis/board/postCreateImage';
-import { postCreateArticle } from '@/apis/board/postCreateArticle';
+import { createImage } from '@/apis/board/createImage';
+import { createArticle } from '@/apis/board/createArticle';
 import { useRouter } from 'next/router';
 import { ReqArticle, Article } from '@/types/article';
 
@@ -30,11 +30,11 @@ const AddBoard = () => {
     };
 
     if (image) {
-      const imageUrl = await postCreateImage(image);
+      const imageUrl = await createImage(image);
       articleData.image = imageUrl.url;
     }
 
-    const newArticle: Article = await postCreateArticle(articleData);
+    const newArticle: Article = await createArticle(articleData);
     router.push(`/addboard/${newArticle.id}`);
   };
 

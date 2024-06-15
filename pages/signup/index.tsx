@@ -6,7 +6,7 @@ import SimpleLoginBox from '@/components/auth/SimpleLoginBox';
 import { useForm } from 'react-hook-form';
 import AuthFormInput from '@/components/auth/AuthFormInput';
 import ErrorMessage from '@/components/auth/ErrorMessage';
-import { postSignUp } from '@/apis/auth/postSignUp';
+import { signUp } from '@/apis/auth/signUp';
 import { useRouter } from 'next/router';
 import LoadingSpinner from '@/public/svgs/spinner.svg';
 import useAuthRedirect from '@/hooks/useAuthRedirect';
@@ -26,7 +26,7 @@ const SignUp = () => {
   const onSubmit = async (data: SignUpFormData) => {
     try {
       setIsLoading(true);
-      await postSignUp(data);
+      await signUp(data);
       router.push('/login');
     } catch (error) {
       console.error(error);

@@ -7,7 +7,7 @@ import AlreadyText from '@/components/auth/AlreadyText';
 import { useForm } from 'react-hook-form';
 import ErrorMessage from '@/components/auth/ErrorMessage';
 import { useRouter } from 'next/router';
-import { postSignIn } from '@/apis/auth/postSignIn';
+import { signIn } from '@/apis/auth/signIn';
 import { STORAGE_KEYS } from '@/constants/storageKey';
 import LoadingSpinner from '@/public/svgs/spinner.svg';
 import useAuthRedirect from '@/hooks/useAuthRedirect';
@@ -28,7 +28,7 @@ const Login = () => {
   const onSubmit = async (data: LoginFormData) => {
     try {
       setIsLoading(true);
-      const res = await postSignIn(data);
+      const res = await signIn(data);
       localStorage.setItem(STORAGE_KEYS.accessToken, res.accessToken);
       localStorage.setItem(STORAGE_KEYS.refreshToken, res.refreshToken);
       router.push('/');

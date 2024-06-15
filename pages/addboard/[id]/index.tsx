@@ -7,7 +7,7 @@ import style from './style.module.scss';
 import axios from '@/lib/axios';
 import { Article } from '@/types/article';
 import { ArticleCommentList } from '@/types/comment';
-import { postCreateComment } from '@/apis/board/postCreateComment';
+import { createComment } from '@/apis/board/createComment';
 
 interface AddboardDetailProps {
   articleId: number;
@@ -51,7 +51,7 @@ const AddboardDetail = ({
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await postCreateComment(articleId, comment);
+    const res = await createComment(articleId, comment);
 
     setCommentList((prevCommentList) => ({
       ...prevCommentList,

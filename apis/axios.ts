@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { isAxiosError } from 'axios';
-import { postCreateToken } from './auth/postCreateToken';
+import { reissueToken } from './auth/reissueToken';
 import { STORAGE_KEYS } from '@/constants/storageKey';
 
 /** 단순한 API 요청 클라이언트 */
@@ -32,7 +32,7 @@ authAxios.interceptors.response.use(
 
     if (isAxiosError(error)) {
       if (error.response?.status === 401) {
-        const res = await postCreateToken();
+        const res = await reissueToken();
         localStorage.setItem(STORAGE_KEYS.accessToken, res.accessToken);
 
         return axios({
