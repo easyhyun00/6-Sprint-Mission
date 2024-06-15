@@ -3,7 +3,7 @@ import AuthFormInput from '@/components/auth/AuthFormInput';
 import style from './style.module.scss';
 import Button from '@/components/common/Button';
 import SimpleLoginBox from '@/components/auth/SimpleLoginBox';
-import AlreadyText from '@/components/auth/AlreadyText';
+import AuthSwitchPrompt from '@/components/auth/AuthSwitchPrompt';
 import { useForm } from 'react-hook-form';
 import ErrorMessage from '@/components/auth/ErrorMessage';
 import { useRouter } from 'next/router';
@@ -74,7 +74,7 @@ const Login = () => {
         </Button>
       </form>
       <SimpleLoginBox />
-      <AlreadyText type="회원가입" />
+      <AuthSwitchPrompt type="회원가입" />
     </main>
   );
 };

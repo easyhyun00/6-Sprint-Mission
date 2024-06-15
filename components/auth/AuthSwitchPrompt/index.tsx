@@ -2,11 +2,11 @@ import React from 'react';
 import Link from 'next/link';
 import style from './style.module.scss';
 
-interface AlreadyTextProps {
+interface AuthSwitchPromptProps {
   type: '로그인' | '회원가입';
 }
 
-const AlreadyText = ({ type }: AlreadyTextProps) => {
+const AuthSwitchPrompt = ({ type }: AuthSwitchPromptProps) => {
   return (
     <nav>
       {type === '로그인' ? (
@@ -22,4 +22,4 @@ const AlreadyText = ({ type }: AlreadyTextProps) => {
   );
 };
 
-export default AlreadyText;
+export default AuthSwitchPrompt;

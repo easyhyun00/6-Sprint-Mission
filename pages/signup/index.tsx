@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from '@/components/common/Button';
 import style from './style.module.scss';
-import AlreadyText from '@/components/auth/AlreadyText';
+import AuthSwitchPrompt from '@/components/auth/AuthSwitchPrompt';
 import SimpleLoginBox from '@/components/auth/SimpleLoginBox';
 import { useForm } from 'react-hook-form';
 import AuthFormInput from '@/components/auth/AuthFormInput';
@@ -96,7 +96,7 @@ const SignUp = () => {
         </Button>
       </form>
       <SimpleLoginBox />
-      <AlreadyText type="로그인" />
+      <AuthSwitchPrompt type="로그인" />
     </main>
   );
 };
