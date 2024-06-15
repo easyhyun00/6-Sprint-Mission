@@ -5,7 +5,6 @@ import Button from '@/components/common/Button';
 import SimpleLoginBox from '@/components/auth/SimpleLoginBox';
 import AlreadyText from '@/components/auth/AlreadyText';
 import { useForm } from 'react-hook-form';
-import { handleBlurEmail, handleBlurPassword } from '@/utils/formValid';
 import ErrorMessage from '@/components/auth/ErrorMessage';
 import { useRouter } from 'next/router';
 import { postSignIn } from '@/apis/auth/postSignIn';
@@ -23,7 +22,7 @@ const Login = () => {
     formState: { errors, isValid },
     setError,
     clearErrors,
-  } = useForm<LoginInput>();
+  } = useForm<LoginInput>({ mode: 'onBlur' });
   const router = useRouter();
 
   const onSubmit = async (data: LoginInput) => {
@@ -56,7 +55,6 @@ const Login = () => {
             required: true,
             pattern: EMAIL_PATTERN,
           })}
-          onBlur={(e) => handleBlurEmail(e, setError, clearErrors)}
         />
         {errors.email && <ErrorMessage message={errors.email.message} />}
 
@@ -68,7 +66,6 @@ const Login = () => {
           autoComplete="new-password"
           error={!!errors.password}
           {...register('password', { required: true, minLength: PW_MIN_LEN })}
-          onBlur={(e) => handleBlurPassword(e, setError, clearErrors)}
         />
         {errors.password && <ErrorMessage message={errors.password.message} />}
 

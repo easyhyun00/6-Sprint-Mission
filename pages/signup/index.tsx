@@ -5,12 +5,6 @@ import AlreadyText from '@/components/auth/AlreadyText';
 import SimpleLoginBox from '@/components/auth/SimpleLoginBox';
 import { useForm } from 'react-hook-form';
 import AuthFormInput from '@/components/auth/AuthFormInput';
-import {
-  handleBlurEmail,
-  handleBlurNickname,
-  handleBlurPassword,
-  handleBlurConfirmPassword,
-} from '@/utils/formValid';
 import ErrorMessage from '@/components/auth/ErrorMessage';
 import { postSignUp } from '@/apis/auth/postSignUp';
 import { useRouter } from 'next/router';
@@ -26,9 +20,7 @@ const SignUp = () => {
     handleSubmit,
     getValues,
     formState: { errors, isValid },
-    setError,
-    clearErrors,
-  } = useForm<SignUpInput>();
+  } = useForm<SignUpInput>({ mode: 'onBlur' });
   const router = useRouter();
 
   const onSubmit = async (data: SignUpInput) => {
@@ -59,7 +51,6 @@ const SignUp = () => {
             required: true,
             pattern: EMAIL_PATTERN,
           })}
-          onBlur={(e) => handleBlurEmail(e, setError, clearErrors)}
         />
         {errors.email && <ErrorMessage message={errors.email.message} />}
 
@@ -69,7 +60,6 @@ const SignUp = () => {
           placeholder="닉네임을 입력해주세요"
           error={!!errors.nickname}
           {...register('nickname', { required: true })}
-          onBlur={(e) => handleBlurNickname(e, setError, clearErrors)}
         />
         {errors.nickname && <ErrorMessage message={errors.nickname.message} />}
 
@@ -81,7 +71,6 @@ const SignUp = () => {
           autoComplete="new-password"
           error={!!errors.password}
           {...register('password', { required: true, minLength: PW_MIN_LEN })}
-          onBlur={(e) => handleBlurPassword(e, setError, clearErrors)}
         />
         {errors.password && <ErrorMessage message={errors.password.message} />}
 
@@ -97,14 +86,6 @@ const SignUp = () => {
             minLength: PW_MIN_LEN,
             validate: (value) => value === getValues('password'),
           })}
-          onBlur={(e) =>
-            handleBlurConfirmPassword(
-              e,
-              setError,
-              clearErrors,
-              getValues('password')
-            )
-          }
         />
         {errors.passwordConfirmation && (
           <ErrorMessage message={errors.passwordConfirmation.message} />
