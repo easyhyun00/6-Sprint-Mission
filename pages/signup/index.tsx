@@ -4,7 +4,7 @@ import style from './style.module.scss';
 import AuthSwitchPrompt from '@/components/auth/AuthSwitchPrompt';
 import SimpleLoginBox from '@/components/auth/SimpleLoginBox';
 import { useForm } from 'react-hook-form';
-import AuthFormInput from '@/components/auth/AuthFormInput';
+import FormInput from '@/components/common/FormInput';
 import ErrorMessage from '@/components/auth/ErrorMessage';
 import { signUp } from '@/apis/auth/signUp';
 import { useRouter } from 'next/router';
@@ -41,7 +41,7 @@ const SignUp = () => {
   return (
     <main>
       <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
-        <AuthFormInput
+        <FormInput
           label="이메일"
           id="email"
           placeholder="이메일을 입력해주세요"
@@ -54,7 +54,7 @@ const SignUp = () => {
         />
         {errors.email && <ErrorMessage message={errors.email.message} />}
 
-        <AuthFormInput
+        <FormInput
           label="닉네임"
           id="nickname"
           placeholder="닉네임을 입력해주세요"
@@ -63,7 +63,7 @@ const SignUp = () => {
         />
         {errors.nickname && <ErrorMessage message={errors.nickname.message} />}
 
-        <AuthFormInput
+        <FormInput
           label="비밀번호"
           id="password"
           placeholder="비밀번호를 입력해주세요"
@@ -74,7 +74,7 @@ const SignUp = () => {
         />
         {errors.password && <ErrorMessage message={errors.password.message} />}
 
-        <AuthFormInput
+        <FormInput
           label="비밀번호 확인"
           id="passwordConfirmation"
           placeholder="비밀번호를 다시 한 번 입력해주세요"

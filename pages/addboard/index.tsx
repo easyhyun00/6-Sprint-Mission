@@ -2,7 +2,7 @@ import Button from '@/components/common/Button';
 import TitleText from '@/components/common/TitleText';
 import React, { FormEvent, useState, useCallback, ChangeEvent } from 'react';
 import style from './style.module.scss';
-import FormInput from '@/components/addboard/FormInput';
+import FormInput from '@/components/common/FormInput';
 import FormTextarea from '@/components/addboard/FormTextarea';
 import FormImage from '@/components/addboard/FormImage';
 import useIsMobile from '@/hooks/useIsMobile';

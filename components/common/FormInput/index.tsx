@@ -10,7 +10,7 @@ interface FormInputProps extends ComponentProps<'input'> {
   error?: boolean;
 }
 
-const AuthFormInput = forwardRef<HTMLInputElement, FormInputProps>(
+const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
   ({ label, id, placeholder, error, ...props }, ref) => {
     return (
       <FormWrapper id={id} label={label}>
@@ -29,6 +29,6 @@ const AuthFormInput = forwardRef<HTMLInputElement, FormInputProps>(
   }
 );
 
-AuthFormInput.displayName = 'AuthFormInput';
+FormInput.displayName = 'FormInput';
 
-export default AuthFormInput;
+export default FormInput;

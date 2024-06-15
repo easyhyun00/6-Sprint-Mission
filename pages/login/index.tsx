@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AuthFormInput from '@/components/auth/AuthFormInput';
+import FormInput from '@/components/common/FormInput';
 import style from './style.module.scss';
 import Button from '@/components/common/Button';
 import SimpleLoginBox from '@/components/auth/SimpleLoginBox';
@@ -20,8 +20,6 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors, isValid },
-    setError,
-    clearErrors,
   } = useForm<LoginFormData>({ mode: 'onBlur' });
   const router = useRouter();
 
@@ -45,7 +43,7 @@ const Login = () => {
   return (
     <main>
       <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
-        <AuthFormInput
+        <FormInput
           label="이메일"
           id="email"
           placeholder="이메일을 입력해주세요"
@@ -58,7 +56,7 @@ const Login = () => {
         />
         {errors.email && <ErrorMessage message={errors.email.message} />}
 
-        <AuthFormInput
+        <FormInput
           label="비밀번호"
           id="password"
           placeholder="비밀번호를 입력해주세요"
