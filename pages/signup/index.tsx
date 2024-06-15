@@ -9,9 +9,10 @@ import ErrorMessage from '@/components/auth/ErrorMessage';
 import { signUp } from '@/apis/auth/signUp';
 import { useRouter } from 'next/router';
 import LoadingSpinner from '@/public/svgs/spinner.svg';
-import useAuthRedirect from '@/hooks/useAuthRedirect';
 import { SignUpFormData } from '@/types/auth';
 import { EMAIL_PATTERN, PW_MIN_LEN } from '@/constants/authForm';
+import { ERROR_MESSAGE } from '@/constants/errorMessage';
+import withAuthRedirect from '@/hoc/withAuthRedirect';
 
 const SignUp = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -36,8 +37,6 @@ const SignUp = () => {
     }
   };
 
-  useAuthRedirect();
-
   return (
     <main>
       <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
@@ -48,8 +47,11 @@ const SignUp = () => {
           type="email"
           error={!!errors.email}
           {...register('email', {
-            required: true,
-            pattern: EMAIL_PATTERN,
+            required: ERROR_MESSAGE.emailRequired,
+            pattern: {
+              value: EMAIL_PATTERN,
+              message: ERROR_MESSAGE.invalidEmail,
+            },
           })}
         />
         {errors.email && <ErrorMessage message={errors.email.message} />}
@@ -59,7 +61,9 @@ const SignUp = () => {
           id="nickname"
           placeholder="닉네임을 입력해주세요"
           error={!!errors.nickname}
-          {...register('nickname', { required: true })}
+          {...register('nickname', {
+            required: ERROR_MESSAGE.nicknameRequired,
+          })}
         />
         {errors.nickname && <ErrorMessage message={errors.nickname.message} />}
 
@@ -70,7 +74,13 @@ const SignUp = () => {
           type="password"
           autoComplete="new-password"
           error={!!errors.password}
-          {...register('password', { required: true, minLength: PW_MIN_LEN })}
+          {...register('password', {
+            required: ERROR_MESSAGE.passwordRequired,
+            minLength: {
+              value: PW_MIN_LEN,
+              message: ERROR_MESSAGE.passwordLength(PW_MIN_LEN),
+            },
+          })}
         />
         {errors.password && <ErrorMessage message={errors.password.message} />}
 
@@ -82,9 +92,13 @@ const SignUp = () => {
           autoComplete="new-password"
           error={!!errors.passwordConfirmation}
           {...register('passwordConfirmation', {
-            required: true,
-            minLength: PW_MIN_LEN,
-            validate: (value) => value === getValues('password'),
+            required: ERROR_MESSAGE.passwordRequired,
+            minLength: {
+              value: PW_MIN_LEN,
+              message: ERROR_MESSAGE.passwordLength(PW_MIN_LEN),
+            },
+            validate: (value) =>
+              value === getValues('password') || ERROR_MESSAGE.passwordMismatch,
           })}
         />
         {errors.passwordConfirmation && (
@@ -101,4 +115,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default withAuthRedirect(SignUp);

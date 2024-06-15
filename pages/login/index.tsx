@@ -10,9 +10,10 @@ import { useRouter } from 'next/router';
 import { signIn } from '@/apis/auth/signIn';
 import { STORAGE_KEYS } from '@/constants/storageKey';
 import LoadingSpinner from '@/public/svgs/spinner.svg';
-import useAuthRedirect from '@/hooks/useAuthRedirect';
 import { LoginFormData } from '@/types/auth';
 import { EMAIL_PATTERN, PW_MIN_LEN } from '@/constants/authForm';
+import { ERROR_MESSAGE } from '@/constants/errorMessage';
+import withAuthRedirect from '@/hoc/withAuthRedirect';
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -38,8 +39,6 @@ const Login = () => {
     }
   };
 
-  useAuthRedirect();
-
   return (
     <main>
       <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
@@ -50,8 +49,11 @@ const Login = () => {
           type="email"
           error={!!errors.email}
           {...register('email', {
-            required: true,
-            pattern: EMAIL_PATTERN,
+            required: ERROR_MESSAGE.emailRequired,
+            pattern: {
+              value: EMAIL_PATTERN,
+              message: ERROR_MESSAGE.invalidEmail,
+            },
           })}
         />
         {errors.email && <ErrorMessage message={errors.email.message} />}
@@ -63,7 +65,13 @@ const Login = () => {
           type="password"
           autoComplete="new-password"
           error={!!errors.password}
-          {...register('password', { required: true, minLength: PW_MIN_LEN })}
+          {...register('password', {
+            required: ERROR_MESSAGE.passwordRequired,
+            minLength: {
+              value: PW_MIN_LEN,
+              message: ERROR_MESSAGE.passwordLength(PW_MIN_LEN),
+            },
+          })}
         />
         {errors.password && <ErrorMessage message={errors.password.message} />}
 
@@ -77,4 +85,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default withAuthRedirect(Login);
