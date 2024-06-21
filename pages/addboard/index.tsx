@@ -2,12 +2,12 @@ import Button from '@/components/common/Button';
 import TitleText from '@/components/common/TitleText';
 import React, { FormEvent, useState, useCallback, ChangeEvent } from 'react';
 import style from './style.module.scss';
-import FormInput from '@/components/addboard/FormInput';
+import FormInput from '@/components/common/FormInput';
 import FormTextarea from '@/components/addboard/FormTextarea';
 import FormImage from '@/components/addboard/FormImage';
 import useIsMobile from '@/hooks/useIsMobile';
-import { postImage } from '@/apis/postImage';
-import { postArticle } from '@/apis/postArticle';
+import { createImage } from '@/apis/board/createImage';
+import { createArticle } from '@/apis/board/createArticle';
 import { useRouter } from 'next/router';
 import { ReqArticle, Article } from '@/types/article';
 
@@ -30,19 +30,19 @@ const AddBoard = () => {
     };
 
     if (image) {
-      const imageUrl = await postImage(image);
+      const imageUrl = await createImage(image);
       articleData.image = imageUrl.url;
     }
 
-    const newArticle: Article = await postArticle(articleData);
+    const newArticle: Article = await createArticle(articleData);
     router.push(`/addboard/${newArticle.id}`);
   };
 
-  const memoizedSetTitle = useCallback(
+  const handleChangeTitle = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value),
     []
   );
-  const memoizedSetContent = useCallback(
+  const handleChangeContent = useCallback(
     (e: ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value),
     []
   );
@@ -61,7 +61,7 @@ const AddBoard = () => {
           id="title"
           placeholder="제목을 입력해주세요"
           value={title}
-          onChange={memoizedSetTitle}
+          onChange={handleChangeTitle}
         />
         <FormTextarea
           label="*내용"
@@ -69,7 +69,7 @@ const AddBoard = () => {
           placeholder="내용을 입력해주세요"
           rows={isMobile ? 7 : 10}
           value={content}
-          onChange={memoizedSetContent}
+          onChange={handleChangeContent}
         />
         <FormImage
           label="이미지"

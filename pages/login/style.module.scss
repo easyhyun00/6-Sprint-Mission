@@ -1,0 +1,15 @@
+@import '../../styles/';
+
+.form {
+  margin-top: 40px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  & button {
+    height: 56px;
+
+    justify-content: center;
+  }
+}

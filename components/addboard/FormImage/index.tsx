@@ -1,4 +1,10 @@
-import React, { ChangeEvent, ComponentProps, useMemo, memo } from 'react';
+import React, {
+  ChangeEvent,
+  ComponentProps,
+  memo,
+  useEffect,
+  useState,
+} from 'react';
 import FormWrapper from '@/components/common/FormWrapper';
 import style from './style.module.scss';
 import PlusIcon from '@/public/svgs/plus-icon.svg';
@@ -19,6 +25,8 @@ const FormImage = ({
   handleChange,
   ...props
 }: FormImageProps) => {
+  const [imageUrl, setImageUrl] = useState<null | string>(null);
+
   const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
@@ -31,10 +39,16 @@ const FormImage = ({
     handleChange(null);
   };
 
-  const imageUrl = useMemo(
-    () => (image ? URL.createObjectURL(image) : null),
-    [image]
-  );
+  useEffect(() => {
+    if (image) {
+      const url = URL.createObjectURL(image);
+      setImageUrl(url);
+
+      return () => {
+        URL.revokeObjectURL(url);
+      };
+    }
+  }, [image]);
 
   return (
     <FormWrapper id={id} label={label}>

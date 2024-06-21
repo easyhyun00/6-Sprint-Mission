@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import BoardPost from '../BoardPost';
 import { Post } from '@/types/post';
-import { getArticleList } from '@/apis/getArticleList';
+import { getArticleList } from '@/apis/board/getArticleList';
 import style from './style.module.scss';
 import { SortType } from '@/constants/sortOption';
 import LoadingSpinner from '@/public/svgs/spinner.svg';
@@ -34,7 +34,9 @@ const BoardPostListContainer = ({
   }>(getArticleList, params);
 
   if (isLoading && pageSize === BOARD_PAGE_SIZE) {
-    return <LoadingSpinner className={style.spinner} />;
+    return (
+      <LoadingSpinner width={200} height={200} className={style.spinner} />
+    );
   }
   if (loadError) {
     return <span>{loadError.message}</span>;

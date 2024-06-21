@@ -3,3 +3,7 @@
 .input {
   @include input-style;
 }
+
+.error {
+  border: 2px solid red;
+}

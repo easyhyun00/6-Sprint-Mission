@@ -1,14 +1,21 @@
 import axios from 'axios';
 import { isAxiosError } from 'axios';
-import { postToken } from './postToken';
+import { reissueToken } from './auth/reissueToken';
 import { STORAGE_KEYS } from '@/constants/storageKey';
 
-const baseAxios = axios.create({
+/** 단순한 API 요청 클라이언트 */
+export const baseAxios = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   timeout: 30000,
 });
 
-baseAxios.interceptors.request.use((config) => {
+/** 토큰 있는 API 요청 클라이언트 */
+export const authAxios = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  timeout: 30000,
+});
+
+authAxios.interceptors.request.use((config) => {
   config.headers.Authorization = `Bearer ${localStorage.getItem(
     STORAGE_KEYS.accessToken
   )}`;
@@ -16,7 +23,7 @@ baseAxios.interceptors.request.use((config) => {
   return config;
 });
 
-baseAxios.interceptors.response.use(
+authAxios.interceptors.response.use(
   (response) => {
     return response;
   },
@@ -25,7 +32,7 @@ baseAxios.interceptors.response.use(
 
     if (isAxiosError(error)) {
       if (error.response?.status === 401) {
-        const res = await postToken();
+        const res = await reissueToken();
         localStorage.setItem(STORAGE_KEYS.accessToken, res.accessToken);
 
         return axios({
@@ -43,5 +50,3 @@ baseAxios.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-export default baseAxios;

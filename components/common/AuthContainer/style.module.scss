@@ -1,0 +1,24 @@
+@import '../../../styles';
+
+.container {
+  max-width: $auth-max-width-size;
+  margin: 0 auto;
+
+  @media (max-width: $auth-max-width-size) {
+    margin-inline: 16px;
+  }
+}
+
+.header {
+  text-align: center;
+
+  margin-top: 60px;
+
+  @media (max-width: $tablet-size) {
+    margin-top: 48px;
+  }
+
+  @media (max-width: $mobile-size) {
+    margin-top: 24px;
+  }
+}

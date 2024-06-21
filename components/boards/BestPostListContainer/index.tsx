@@ -2,11 +2,10 @@ import React, { useMemo } from 'react';
 import { Post } from '@/types/post';
 import BestPost from '../BestPost';
 import style from './style.module.scss';
-import { getArticleList } from '@/apis/getArticleList';
+import { getArticleList } from '@/apis/board/getArticleList';
 import useItemsCountOnWindowSize from '@/hooks/useItemsCountOnWindowSize';
 import { useFetch } from '@/hooks/useFetch';
 import LoadingSpinner from '@/public/svgs/spinner.svg';
-import Link from 'next/link';
 
 const BestPostListContainer = () => {
   const pageSize = useItemsCountOnWindowSize({
@@ -28,7 +27,9 @@ const BestPostListContainer = () => {
   );
 
   if (isLoading) {
-    return <LoadingSpinner className={style.spinner} />;
+    return (
+      <LoadingSpinner width={200} height={200} className={style.spinner} />
+    );
   }
   if (loadError) {
     return <span>{loadError.message}</span>;

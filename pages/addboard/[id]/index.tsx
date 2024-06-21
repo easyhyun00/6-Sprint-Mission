@@ -7,7 +7,7 @@ import style from './style.module.scss';
 import axios from '@/lib/axios';
 import { Article } from '@/types/article';
 import { ArticleCommentList } from '@/types/comment';
-import { postComment } from '@/apis/postComment';
+import { createComment } from '@/apis/board/createComment';
 
 interface AddboardDetailProps {
   articleId: number;
@@ -20,26 +20,23 @@ export async function getServerSideProps(context: {
 }) {
   const articleId = context.params['id'];
 
-  let article;
   try {
-    const res = await axios.get(`/articles/${articleId}`);
-    article = res.data;
+    const [articleRes, commentsRes] = await Promise.all([
+      axios.get(`/articles/${articleId}`),
+      axios.get(`/articles/${articleId}/comments?limit=20`),
+    ]);
+    return {
+      props: {
+        articleId,
+        article: articleRes.data,
+        commentList: commentsRes.data,
+      },
+    };
   } catch (error) {
     return {
       notFound: true,
     };
   }
-
-  const res = await axios.get(`/articles/${articleId}/comments?limit=20`);
-  const commentList = res.data;
-
-  return {
-    props: {
-      articleId,
-      article,
-      commentList,
-    },
-  };
 }
 
 const AddboardDetail = ({
@@ -54,7 +51,7 @@ const AddboardDetail = ({
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await postComment(articleId, comment);
+    const res = await createComment(articleId, comment);
 
     setCommentList((prevCommentList) => ({
       ...prevCommentList,
