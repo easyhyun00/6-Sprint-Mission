@@ -10,25 +10,27 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-  },
-  {
-    path: '/items',
-    element: <ItemsPage />,
-  },
-  {
-    path: '/addItem',
-    element: (
-      <ImageUrlProvider>
-        <AddItemPage />
-      </ImageUrlProvider>
-    ),
-  },
-  {
-    path: '/items/:productId',
-    element: <ItemsDetailPage />,
-  },
-  {
-    path: '/*',
-    element: <h1>미구현 페이지 입니다.</h1>,
+    children: [
+      {
+        path: '/items',
+        element: <ItemsPage />,
+      },
+      {
+        path: '/addItem',
+        element: (
+          <ImageUrlProvider>
+            <AddItemPage />
+          </ImageUrlProvider>
+        ),
+      },
+      {
+        path: '/items/:productId',
+        element: <ItemsDetailPage />,
+      },
+      {
+        path: '/*',
+        element: <h1>미구현 페이지 입니다.</h1>,
+      },
+    ],
   },
 ]);

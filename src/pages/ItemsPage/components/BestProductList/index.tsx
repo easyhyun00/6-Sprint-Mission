@@ -1,37 +1,28 @@
 import React from 'react';
 import { getProducts } from 'api/productApi';
-import { useEffect, useState } from 'react';
 import ProductItem from 'components/ProductItem';
 import Grid from '@mui/material/Grid';
 import styles from './style.module.css';
-import { ItemType } from 'types/item';
+import { useQuery } from '@tanstack/react-query';
 
 const BestProductList = () => {
-  const [bestProduct, setBestProduct] = useState<ItemType[]>([]);
-  const [loadingError, setLoadingError] = useState<Error | null>(null);
-
-  const handleBestItemLoad = async () => {
-    let result;
-    try {
-      setLoadingError(null);
-      result = await getProducts({ pageSize: 4, orderBy: 'favorite' });
-      setBestProduct(result.list);
-    } catch (error) {
-      setLoadingError(error as Error);
-      return;
-    }
-  };
-
-  useEffect(() => {
-    handleBestItemLoad();
-  }, []);
+  const {
+    data: bestProduct,
+    isPending,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ['product', 'list'],
+    queryFn: () => getProducts({ pageSize: 4, orderBy: 'favorite' }),
+  });
 
   return (
     <section>
       <h3>베스트 상품</h3>
-      {loadingError?.message && <span>{loadingError.message}</span>}
+      {isPending && <span>로딩중...</span>}
+      {isError && <span>{error.message}</span>}
       <Grid container spacing={2}>
-        {bestProduct.map((item, index) => {
+        {bestProduct?.list.map((item, index) => {
           return (
             <Grid
               item

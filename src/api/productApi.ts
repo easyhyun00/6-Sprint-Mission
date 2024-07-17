@@ -1,5 +1,7 @@
 import { baseAxios } from './api';
 import { type OrderType } from 'constants/orderOption';
+import { isAxiosError, AxiosResponse } from 'axios';
+import { ProductResponse } from 'types/item';
 
 interface getProductDetailProps {
   page?: number;
@@ -13,15 +15,22 @@ export const getProducts = async ({
   orderBy = 'recent',
 }: getProductDetailProps) => {
   try {
-    const response = await baseAxios.get('products', {
-      params: {
-        page,
-        pageSize,
-        orderBy,
-      },
-    });
+    const response: AxiosResponse<ProductResponse> = await baseAxios.get(
+      'products',
+      {
+        params: {
+          page,
+          pageSize,
+          orderBy,
+        },
+      }
+    );
     return response.data;
   } catch (error) {
-    throw new Error('상품 불러오기 실패');
+    if (isAxiosError(error)) {
+      throw error.response?.data;
+    } else {
+      throw new Error('상품을 불러오기 실패');
+    }
   }
 };
