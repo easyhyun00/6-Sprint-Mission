@@ -1,16 +1,16 @@
 import { baseAxios } from './api';
-import { OrderBy } from 'types/order';
+import { type OrderType } from 'constants/orderOption';
 
 interface getProductDetailProps {
   page?: number;
   pageSize?: number;
-  orderBy?: OrderBy.좋아요순 | OrderBy.최신순;
+  orderBy?: OrderType;
 }
 
 export const getProducts = async ({
   page = 1,
   pageSize = 10,
-  orderBy = OrderBy.최신순,
+  orderBy = 'recent',
 }: getProductDetailProps) => {
   try {
     const response = await baseAxios.get('products', {
