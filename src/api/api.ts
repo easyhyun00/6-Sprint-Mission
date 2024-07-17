@@ -11,7 +11,7 @@ export const baseAxios = axios.create({
 
 /** 토큰 있는 API 요청 클라이언트 */
 export const authAxios = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  baseURL: baseUrl,
   timeout: 30000,
 });
 

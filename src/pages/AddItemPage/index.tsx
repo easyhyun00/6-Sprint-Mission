@@ -10,6 +10,9 @@ import { FormHeader, AddItemTitle, FormContainer, TagList, Tag } from './style';
 import { useImageUrl, useSetImageUrl } from 'contexts/ItemImageContext';
 import CloseXIcon from 'assets/icons/CloseX';
 import { AddItemType } from 'types/item';
+import { createImage } from 'api/createImage';
+import { ProductFormData } from 'types/product';
+import { createProduct } from 'api/product/createProduct';
 
 const AddItemPage = () => {
   const [inputData, setInputData] = useState<AddItemType>({
@@ -30,15 +33,23 @@ const AddItemPage = () => {
     );
   };
 
-  const handleSubmitForm = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmitForm = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append('image', JSON.stringify(imageUrl));
-    formData.append('name', inputData.itemName);
-    formData.append('description', inputData.itemDescription);
-    formData.append('price', inputData.itemPrice);
-    formData.append('tag', JSON.stringify(inputData.itemTag));
+    const itemData: ProductFormData = {
+      name: inputData.itemName.trim(),
+      description: inputData.itemDescription.trim(),
+      tags: inputData.itemTag,
+      price: Number(inputData.itemPrice),
+      images: [],
+    };
+
+    if (imageUrl) {
+      const result = await createImage(imageUrl);
+      itemData.images = [...itemData.images, result.url];
+    }
+
+    await createProduct(itemData);
   };
 
   const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
