@@ -5,12 +5,17 @@ import ItemsPage from 'pages/ItemsPage';
 import AddItemPage from 'pages/AddItemPage';
 import ItemsDetailPage from 'pages/ItemsDetailPage';
 import { ImageUrlProvider } from 'contexts/ItemImageContext';
+import LoginPage from 'pages/LoginPage';
 
 export const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
     children: [
+      {
+        path: '/login',
+        element: <LoginPage />,
+      },
       {
         path: '/items',
         element: <ItemsPage />,
