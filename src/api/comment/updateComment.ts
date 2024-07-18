@@ -1,14 +1,16 @@
 import { authAxios } from 'api/api';
 
-export const createProductComment = async ({
-  productId,
+export const updateComment = async ({
+  commentId,
   content,
 }: {
-  productId: number;
+  commentId: number;
   content: string;
 }) => {
   try {
-    const response = await authAxios.post(`products/${productId}`, { content });
+    const response = await authAxios.patch(`comments/${commentId}`, {
+      content,
+    });
     return response.data;
   } catch (error) {
     console.error(error);
