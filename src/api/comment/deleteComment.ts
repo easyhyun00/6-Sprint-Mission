@@ -1,14 +1,8 @@
 import { authAxios } from 'api/api';
 
-export const createProductComment = async ({
-  productId,
-  content,
-}: {
-  productId: number;
-  content: string;
-}) => {
+export const deleteComment = async (commentId: number) => {
   try {
-    const response = await authAxios.post(`products/${productId}`, { content });
+    const response = await authAxios.delete(`comments/${commentId}`);
     return response.data;
   } catch (error) {
     console.error(error);
