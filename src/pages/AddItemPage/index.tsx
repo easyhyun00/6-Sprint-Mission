@@ -12,9 +12,31 @@ import CloseXIcon from 'assets/icons/CloseX';
 import { AddItemType } from 'types/item';
 import { createImage } from 'api/createImage';
 import { ProductFormData } from 'types/product';
+import { useMutation } from '@tanstack/react-query';
 import { createProduct } from 'api/product/createProduct';
+import { useNavigate } from 'react-router-dom';
 
 const AddItemPage = () => {
+  const navigate = useNavigate();
+
+  const { mutate: mutateImage } = useMutation({
+    mutationFn: (image: File) => createImage(image),
+    onError: (error) => {
+      alert(error);
+    },
+  });
+
+  const { mutate: mutateProduct, isPending } = useMutation({
+    mutationFn: (data: ProductFormData) => createProduct(data),
+    onSuccess: (res) => {
+      alert('상품이 등록되었습니다.');
+      navigate(`/items/${res.id}`);
+    },
+    onError: (error) => {
+      alert(error);
+    },
+  });
+
   const [inputData, setInputData] = useState<AddItemType>({
     itemName: '',
     itemDescription: '',
@@ -33,6 +55,7 @@ const AddItemPage = () => {
     );
   };
 
+  // 상품 등록하기
   const handleSubmitForm = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -45,11 +68,15 @@ const AddItemPage = () => {
     };
 
     if (imageUrl) {
-      const result = await createImage(imageUrl);
-      itemData.images = [...itemData.images, result.url];
+      mutateImage(imageUrl, {
+        onSuccess: (res) => {
+          itemData.images.push(res.url);
+          mutateProduct(itemData);
+        },
+      });
+    } else {
+      mutateProduct(itemData);
     }
-
-    await createProduct(itemData);
   };
 
   const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
@@ -112,7 +139,11 @@ const AddItemPage = () => {
         <form onSubmit={handleSubmitForm}>
           <FormHeader>
             <AddItemTitle>상품 등록하기</AddItemTitle>
-            <Button disabled={!isFormValid()} title="등록" type="submit" />
+            <Button
+              disabled={!isFormValid() || isPending}
+              title="등록"
+              type="submit"
+            />
           </FormHeader>
           <FormContainer>
             <ImageFileInput
