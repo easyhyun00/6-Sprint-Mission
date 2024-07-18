@@ -1,4 +1,4 @@
-import { authAxios } from 'api/api';
+import { baseAxios } from 'api/api';
 import { STORAGE_KEYS } from 'constants/storageKey';
 
 /**
@@ -6,8 +6,8 @@ import { STORAGE_KEYS } from 'constants/storageKey';
  */
 export const reissueToken = async () => {
   try {
-    const response = await authAxios.post('auth/refresh-token', {
-      refreshToken: localStorage.getItem(STORAGE_KEYS.accessToken),
+    const response = await baseAxios.post('auth/refresh-token', {
+      refreshToken: localStorage.getItem(STORAGE_KEYS.refreshToken),
     });
     return response.data;
   } catch (error) {
