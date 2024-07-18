@@ -21,6 +21,7 @@ const LoginPage = () => {
     onSuccess: (res) => {
       localStorage.setItem(STORAGE_KEYS.accessToken, res.accessToken);
       localStorage.setItem(STORAGE_KEYS.refreshToken, res.refreshToken);
+      localStorage.setItem('userId', res.user.id);
     },
     onError: (error) => {
       alert(error);

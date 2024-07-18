@@ -6,7 +6,7 @@ interface DropdownProps {
   handleClickItem: (label: string) => void;
 }
 
-const DropDown = ({ options, handleClickItem }: DropdownProps) => {
+const NewDropDown = ({ options, handleClickItem }: DropdownProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const [labelName, setLabelName] = useState<string>(options[0]);
 
@@ -49,4 +49,4 @@ const DropDown = ({ options, handleClickItem }: DropdownProps) => {
   );
 };
 
-export default DropDown;
+export default NewDropDown;
